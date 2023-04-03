@@ -1,0 +1,41 @@
+.signin {
+  background: #10141e;
+}
+.signinHeader {
+  padding: 15%;
+  margin: 0 30%;
+}
+.Signinform {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #161d2f;
+  padding: 10%;
+  width: 80%;
+  border-radius: 10px;
+}
+.Login {
+  color: #fff;
+  font-size: 40px;
+  font-weight: light;
+}
+.inputsection {
+  margin: 3% 0;
+  padding: 3%;
+  border: none;
+  border-bottom: 1px solid #5a698f;
+  background-color: #161d2f;
+  width: 100%;
+}
+.loginbutton {
+  border-radius: 10px;
+  width: 80%;
+  text-align: center;
+  margin: 10%;
+}
+.logintext {
+  width: 80%;
+  text-align: center;
+  margin: 0 9%;
+}
