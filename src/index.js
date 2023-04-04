@@ -6,8 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Signin from "./components/Signin";
 import SignUp from "./components/SignUp";
 import Home from "./components/Home";
-// import dotenv from "dotenv";
-// dotenv.config();
+
 
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
