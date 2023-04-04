@@ -29,11 +29,24 @@ const SignUp = () => {
     event.preventDefault();
     console.log("Submitted: ", email, password);
 
-    const { error } = await supabase.auth.signUp({
+    const { error, data: createdUser} = await supabase.auth.signUp({
       email,
       password,
       repeatPassword,
     });
+    const emailIsTaken = createdUser.user.identities?.length === 0;
+
+    // Example of setting an error message.
+    if (emailIsTaken) {
+      alert("email exisits")
+      navigate("/signup")
+      return;
+
+    }
+    if (password !== repeatPassword) {
+      alert("Passwords do not match");
+      return;
+    }
     if (error) {
       navigate("/");
       console.error("Error signing up:", error.message);
