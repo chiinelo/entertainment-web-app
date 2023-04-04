@@ -25,7 +25,6 @@ const Signin = () => {
   const navigate = useNavigate();
   const handleSubmit = async (event) => {
     event.preventDefault();
-    navigate("/home");
     console.log("Submitted: ", email, password);
 
     const { data, error } = await supabase.auth.signInWithPassword({

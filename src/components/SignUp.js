@@ -27,7 +27,6 @@ const SignUp = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    navigate("/home");
     console.log("Submitted: ", email, password);
 
     const { error } = await supabase.auth.signUp({
@@ -37,11 +36,19 @@ const SignUp = () => {
     });
     if (error) {
       navigate("/");
-      console.error("Error signing in:", error.message);
+      console.error("Error signing up:", error.message);
     } else {
-      alert("check email for login link!")
-      navigate("/Signin");
-      console.log("Sigup successful! Login");
+      const { error: signInError } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
+      if (signInError) {
+        navigate("/");
+        console.error("Error signing in:", signInError.message);
+      } else {
+        navigate("/home");
+        console.log("Signup and Signin successful! Navigate to Home page");
+      }
     }
     console.log("Submitted: ", email, password, repeatPassword);
   };
@@ -88,12 +95,12 @@ const SignUp = () => {
               onFocus={handleFocus}
               onBlur={handleBlur}
             />
-          <button
-            type="submit"
-            className={`${styles.loginbutton} bg-danger border-0 p-3`}
-          >
-            Create an account
-          </button>
+            <button
+              type="submit"
+              className={`${styles.loginbutton} bg-danger border-0 p-3`}
+            >
+              Create an account
+            </button>
           </form>
           <p className={`${styles.logintext} text-light`}>
             Alread have an account?
