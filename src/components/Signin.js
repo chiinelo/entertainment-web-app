@@ -1,11 +1,18 @@
 import React, { useState } from "react";
 import Movie from "../images/Movie.png";
 import styles from "../styles/signin.module.css";
+import { createClient } from "@supabase/supabase-js";
+import { useNavigate } from "react-router-dom";
 
+const supabase = createClient(
+  process.env.REACT_APP_SUPABASE_URL,
+  process.env.REACT_APP_SUPABASE_KEY
+);
 const Signin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [inputFocused, setInputFocused] = useState(false);
+  const [session, setSession] = useState({})
 
   const handleFocus = () => {
     setInputFocused(true);
@@ -15,9 +22,25 @@ const Signin = () => {
     setInputFocused(false);
   };
 
-  const handleSubmit = (event) => {
-    event.preventDefault(); // Prevents default form submission behavior
-    console.log("Submitted: ", email, password); // Prints form data to the console
+  const navigate = useNavigate();
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    navigate("/home");
+    console.log("Submitted: ", email, password);
+
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
+    console.log(data);
+    if (error) {
+      navigate("/");
+      console.error("Error signing in:", error.message);
+    } else {
+      setSession(data.session)
+      navigate("/home");
+      console.log("Signed in successfully:");
+    }
   };
 
   return (

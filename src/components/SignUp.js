@@ -1,6 +1,13 @@
 import React, { useState } from "react";
 import Movie from "../images/Movie.png";
 import styles from "../styles/signin.module.css";
+import { createClient } from "@supabase/supabase-js";
+import { useNavigate } from "react-router-dom";
+
+const supabase = createClient(
+  process.env.REACT_APP_SUPABASE_URL,
+  process.env.REACT_APP_SUPABASE_KEY
+);
 
 const SignUp = () => {
   const [email, setEmail] = useState("");
@@ -16,10 +23,29 @@ const SignUp = () => {
     setInputFocused(false);
   };
 
-  const handleSubmit = (event) => {
+  const navigate = useNavigate();
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
+    navigate("/home");
+    console.log("Submitted: ", email, password);
+
+    const { error } = await supabase.auth.signUp({
+      email,
+      password,
+      repeatPassword,
+    });
+    if (error) {
+      navigate("/");
+      console.error("Error signing in:", error.message);
+    } else {
+      alert("check email for login link!")
+      navigate("/Signin");
+      console.log("Sigup successful! Login");
+    }
     console.log("Submitted: ", email, password, repeatPassword);
   };
+
   return (
     <div>
       <div className={`${styles.signin}`}>
@@ -62,13 +88,13 @@ const SignUp = () => {
               onFocus={handleFocus}
               onBlur={handleBlur}
             />
-          </form>
           <button
             type="submit"
             className={`${styles.loginbutton} bg-danger border-0 p-3`}
           >
             Create an account
           </button>
+          </form>
           <p className={`${styles.logintext} text-light`}>
             Alread have an account?
             <a

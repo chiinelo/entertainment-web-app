@@ -5,7 +5,10 @@ import App from "./App";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Signin from "./components/Signin";
 import SignUp from "./components/SignUp";
-import NavBar from "./components/NavBar"
+import Home from "./components/Home";
+// import dotenv from "dotenv";
+// dotenv.config();
+
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -15,7 +18,7 @@ root.render(
         <Route exact path="/" element={<App />} />
         <Route path="/signin" element={<Signin />} />
         <Route path="/signup" element={<SignUp />} />
-        <Route path="/home" element={<NavBar />} />
+        <Route path="/home" element={<Home />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>
